@@ -1,5 +1,5 @@
 import { FileService } from "@/types/firebase";
-import { Auth } from "firebase/auth";
+import { Auth, User, getAuth } from "firebase/auth";
 import { storage } from "./firebaseInit";
 import {
   ref,
@@ -9,9 +9,9 @@ import {
   uploadBytes,
 } from "firebase/storage";
 
-const getFiles = async (auth: Auth) => {
+const getFiles = async () => {
   //const filesDataDocs = await getFilesDataFromUser(auth);
-
+  const auth = getAuth();
   if (!auth.currentUser) throw Error("User must be logged in");
   const userStorageRef = ref(storage, "files/" + auth.currentUser.uid);
 
@@ -36,7 +36,9 @@ const getFiles = async (auth: Auth) => {
   );
 };
 
-const uploadFile = async (auth: Auth, file: File) => {
+const uploadFile = async (file: File) => {
+  const auth = getAuth();
+
   if (!auth.currentUser) throw Error("User must be logged in");
 
   const storageRef = ref(

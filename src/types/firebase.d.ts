@@ -17,6 +17,6 @@ interface FileData extends FileDataDoc {
 }
 
 interface FileService {
-  uploadFile(auth: Auth, file: File): Promise<boolean>;
-  getFiles(auth: Auth): Promise<FileData[]>;
+  uploadFile(file: File): Promise<boolean>;
+  getFiles(): Promise<FileData[]>;
 }
