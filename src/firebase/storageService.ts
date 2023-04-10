@@ -43,7 +43,7 @@ const uploadFile = async (file: File) => {
 
   const storageRef = ref(
     storage,
-    "files/" + auth.currentUser.uid + "/" + file.name.split("/")[-1]
+    "files/" + auth.currentUser.uid + "/" + file.name
   );
   const uploadResult = await uploadBytes(storageRef, file);
   return !!uploadResult;

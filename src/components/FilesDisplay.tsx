@@ -3,6 +3,7 @@ import { FileData } from "@/types/firebase";
 import { User } from "firebase/auth";
 import { useEffect, useState } from "react";
 import firebaseService from "@/firebase/storageService";
+import UploadFile from "./UploadFile";
 
 export default function FilesDisplay() {
   const [user, setUser] = useState<User | null>(null);
@@ -25,6 +26,7 @@ export default function FilesDisplay() {
 
   return (
     <div>
+      <UploadFile />
       <h1>Files Display</h1>
       {files.map((file, i) => {
         return (
