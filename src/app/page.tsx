@@ -1,6 +1,7 @@
 "use client";
 import FilesDisplay from "@/components/FilesDisplay";
 import Login from "@/components/Login";
+import Navbar from "@/components/NavBar";
 import { onAuthChanged } from "@/firebase/authService";
 import { User } from "firebase/auth";
 import { useEffect, useState } from "react";
@@ -15,9 +16,12 @@ const Home = () => {
   }, []);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      {user ? <FilesDisplay /> : <Login />}
-    </main>
+    <>
+      <Navbar />
+      <main className="flex min-h-screen flex-col items-center justify-between pt-24 m-auto">
+        {user ? <FilesDisplay /> : <Login />}
+      </main>
+    </>
   );
 };
 

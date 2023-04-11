@@ -8,6 +8,7 @@ import UploadFile from "./UploadFile";
 export default function FilesDisplay() {
   const [user, setUser] = useState<User | null>(null);
   const [files, setFiles] = useState<FileData[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     onAuthChanged((user) => {
@@ -17,12 +18,28 @@ export default function FilesDisplay() {
 
   useEffect(() => {
     if (user) {
+      setLoading(true);
       console.log("fetching files");
-      firebaseService.getFiles().then((files) => {
-        setFiles(files);
-      });
-    } else console.log("Not fetching");
+      firebaseService
+        .getFiles()
+        .then((files) => {
+          setFiles(files);
+          setLoading(false);
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    } else if (files.length) {
+      setLoading(false);
+    }
   }, [user]);
+
+  if (loading)
+    return (
+      <div className="text-center w-full font-bold text-2xl mb-4">
+        Loading...
+      </div>
+    );
 
   return (
     <div>
