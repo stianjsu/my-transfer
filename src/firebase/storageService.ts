@@ -10,7 +10,6 @@ import {
 } from "firebase/storage";
 
 const getFiles = async () => {
-  //const filesDataDocs = await getFilesDataFromUser(auth);
   const auth = getAuth();
   if (!auth.currentUser) throw Error("User must be logged in");
   const userStorageRef = ref(storage, "files/" + auth.currentUser.uid);
@@ -55,3 +54,34 @@ const firebaseService: FileService = {
 };
 
 export default firebaseService;
+
+export const dummydata = [
+  {
+    name: "file1.png",
+    sizeMB: 123123,
+    timeCreated: new Date(Date.now()),
+    downloadUrl: "http://localhost:3000",
+    validRef: true,
+  },
+  {
+    name: "file2.jpg",
+    sizeMB: 123123,
+    timeCreated: new Date(Date.now()),
+    downloadUrl: "http://localhost:3000",
+    validRef: true,
+  },
+  {
+    name: "file3.docx",
+    sizeMB: 123123,
+    timeCreated: new Date(Date.now()),
+    downloadUrl: "http://localhost:3000",
+    validRef: true,
+  },
+  {
+    name: "file4.zip",
+    sizeMB: 123123,
+    timeCreated: new Date(Date.now()),
+    downloadUrl: "http://localhost:3000",
+    validRef: true,
+  },
+];

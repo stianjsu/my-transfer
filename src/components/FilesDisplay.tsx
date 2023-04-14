@@ -5,6 +5,17 @@ import { useEffect, useState } from "react";
 import firebaseService from "@/firebase/storageService";
 import UploadFile from "./UploadFile";
 
+const FileDisplay = ({ file }: { file: FileData }) => {
+  return (
+    <div>
+      <p>{file.name}</p>
+      <a className="text-xs" href={file.downloadUrl}>
+        Download
+      </a>
+    </div>
+  );
+};
+
 export default function FilesDisplay() {
   const [user, setUser] = useState<User | null>(null);
   const [files, setFiles] = useState<FileData[]>([]);
@@ -46,14 +57,7 @@ export default function FilesDisplay() {
       <UploadFile />
       <h1>Files Display</h1>
       {files.map((file, i) => {
-        return (
-          <div key={file.name + i}>
-            <p>{file.name}</p>
-            <a className="text-xs" href={file.downloadUrl}>
-              Download
-            </a>
-          </div>
-        );
+        return <FileDisplay file={file} key={i} />;
       })}
     </div>
   );
