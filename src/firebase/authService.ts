@@ -20,5 +20,5 @@ export const signOut = async () => {
 };
 
 export const onAuthChanged = (callback: (user: User | null) => void) => {
-  onAuthStateChanged(auth, callback);
+  return onAuthStateChanged(auth, callback);
 };

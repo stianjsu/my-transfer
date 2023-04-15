@@ -7,6 +7,7 @@ import {
   getMetadata,
   getDownloadURL,
   uploadBytes,
+  StorageReference,
 } from "firebase/storage";
 
 const getFiles = async () => {
@@ -27,12 +28,30 @@ const getFiles = async () => {
   return fileMetaData.map((file) =>
     (({ name, size, timeCreated, url }) => ({
       name,
-      sizeMB: size,
+      sizeBytes: size,
       timeCreated: new Date(timeCreated),
       downloadUrl: url,
       validRef: true,
     }))(file)
   );
+};
+
+export const getFile = async (fileRef: StorageReference) => {
+  const auth = getAuth();
+  if (!auth.currentUser) throw Error("User must be logged in");
+
+  const file = {
+    ...(await getMetadata(fileRef)),
+    url: await getDownloadURL(fileRef),
+  };
+
+  return (({ name, size, timeCreated, url }) => ({
+    name,
+    sizeBytes: size,
+    timeCreated: new Date(timeCreated),
+    downloadUrl: url,
+    validRef: true,
+  }))(file);
 };
 
 const uploadFile = async (file: File) => {
@@ -45,11 +64,13 @@ const uploadFile = async (file: File) => {
     "files/" + auth.currentUser.uid + "/" + file.name
   );
   const uploadResult = await uploadBytes(storageRef, file);
-  return !!uploadResult;
+  console.log({ uploadResult });
+  return uploadResult;
 };
 
 const firebaseService: FileService = {
   getFiles,
+  getFile,
   uploadFile,
 };
 

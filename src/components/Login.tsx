@@ -1,6 +1,9 @@
 "use client";
 import { register, signIn } from "@/firebase/authService";
 import { useState } from "react";
+import { LoadingSpinner } from "./Icons";
+import toast from "react-hot-toast";
+import { FirebaseError } from "firebase/app";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -19,16 +22,22 @@ export default function Login() {
   };
 
   const login = async (email: string, password: string) => {
-    await signIn(email, password).catch((err) => {
-      console.error(err);
-      setErrorMsg("Could not login");
+    await signIn(email, password).catch((err: FirebaseError) => {
+      if (err.code == "auth/invalid-email")
+        toast.error("No user exists with this email");
+      else if (err.code == "auth/wrong-password")
+        toast.error("Wrong password!");
+      else toast.error("Something went wrong");
     });
   };
 
   const signUp = async (email: string, password: string) => {
-    await register(email, password).catch((err) => {
-      console.error(err);
-      setErrorMsg("Could not sign up");
+    await register(email, password).catch((err: FirebaseError) => {
+      if (err.code == "auth/invalid-email")
+        toast.error("Please provide a valid email");
+      else if (err.code == "auth/missing-password")
+        toast.error("Please provide a password");
+      else toast.error("Something went wrong when signing up");
     });
   };
 
@@ -41,8 +50,8 @@ export default function Login() {
 
   if (loading)
     return (
-      <div className="text-center w-full font-bold text-2xl mb-4">
-        Loading...
+      <div className="flex justify-center items-center w-full h-[50vh] font-bold text-2xl mb-4">
+        <LoadingSpinner size={64} />
       </div>
     );
 

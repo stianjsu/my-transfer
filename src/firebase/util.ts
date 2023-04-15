@@ -1,13 +1,23 @@
-/* import { doc, getDoc } from "firebase/firestore";
-import { db } from "./firebaseInit";
-import { Auth } from "firebase/auth";
-import { UserData } from "@/types/firebase";
+import { AuthError } from "firebase/auth";
+import { FirestoreError } from "firebase/firestore";
 
-export const getFilesDataFromUser = async (auth: Auth) => {
-  if (!auth.currentUser) throw Error("User must be signed in");
+export const fileSizeConverter: (size: number) => string = (size) => {
+  const sizeOrders = ["bytes", "KB", "MB", "GB"];
+  let order = Math.floor(Math.log10(size) / 3);
 
-  const docRef = doc(db, "UserData", auth.currentUser.uid);
-  const userData = (await getDoc(docRef)).data() as UserData;
+  return `${(size / 1024 ** order).toFixed(1)} ${sizeOrders[order]}`;
+};
 
-  return userData.files;
-}; */
+interface FormattedError {
+  messageToUser: string;
+  title: string;
+}
+
+const formatFirebaseErrors: (
+  error: AuthError | FirestoreError
+) => FormattedError = (error) => {
+  return {
+    messageToUser: error.message,
+    title: error.name,
+  };
+};
