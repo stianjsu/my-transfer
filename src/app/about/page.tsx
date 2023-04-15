@@ -1,6 +1,6 @@
 import Navbar from "@/components/NavBar";
 
-export default async function About() {
+const About = () => {
   return (
     <>
       <Navbar />
@@ -35,7 +35,9 @@ export default async function About() {
                   <li>
                     Open My-Transfer in your browser on your mobile device.
                   </li>
-                  <li>Click on the "Install" button in the browser menu.</li>
+                  <li>
+                    Click on the &quot;Install&quot; button in the browser menu.
+                  </li>
                   <li>
                     Follow the on-screen prompts to add the app to your home
                     screen.
@@ -63,4 +65,6 @@ export default async function About() {
       </main>
     </>
   );
-}
+};
+
+export default About;
