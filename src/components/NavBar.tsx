@@ -23,7 +23,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed left-0 top-0 flex h-16 w-full border-b-2 border-slate-400">
+    <nav className="fixed left-0 top-0 flex h-16 w-full border-b-2 border-slate-400 bg-slate-800">
       <div className="mx-auto flex h-full w-full max-w-[50rem] flex-row px-5">
         <div className="flex grow items-center">
           <Link href={"/"}>

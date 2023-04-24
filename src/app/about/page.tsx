@@ -4,7 +4,7 @@ const About = () => {
   return (
     <>
       <Navbar />
-      <main className="m-auto flex min-h-screen max-w-xl flex-col items-center justify-between pt-24">
+      <main className="m-auto flex min-h-screen max-w-2xl flex-col items-center justify-between pt-24">
         <div className="min-h-screen ">
           <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div className="text-center">

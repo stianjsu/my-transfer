@@ -8,24 +8,31 @@ import { Download, LoadingSpinner } from "./Icons";
 import { fileSizeConverter } from "@/firebase/util";
 import { UploadResult } from "firebase/storage";
 import { toast } from "react-hot-toast";
-import { FirebaseError } from "firebase/app";
 
 const FileDisplay = ({ file }: { file: FileData }) => {
   return (
-    <div className="flex w-full flex-row items-center gap-4 rounded-lg bg-slate-900 p-2">
-      <span className="grow">{file.name}</span>
-      <div className="flex flex-col text-sm">
-        <span>Size: {fileSizeConverter(file.sizeBytes)}</span>
+    <div className="flex h-24 w-full flex-row items-center gap-4 rounded-lg bg-slate-900 p-2 sm:h-20 ">
+      <span className="line-clamp-3 grow break-words text-sm sm:line-clamp-3 sm:text-base">
+        {file.name}
+      </span>
+
+      <div className="flex min-w-max flex-col text-sm">
         <span>
-          Uploaded:{" "}
+          {/* Uploaded:{" "} */}
           {file.timeCreated.toLocaleDateString("no", { dateStyle: "short" })}
         </span>
+        <span>Size: {fileSizeConverter(file.sizeBytes)}</span>
+        <span>Type: {file.name.split(".")[1].toUpperCase()}</span>
       </div>
-      <a href={file.downloadUrl} target="_blank" className="h-12 w-12">
-        <div className="flex h-full w-full items-center justify-center rounded-full border border-slate-300 transition ease-in-out hover:bg-slate-500">
+      <div className="h-12 w-12 min-w-max">
+        <a
+          href={file.downloadUrl}
+          target="_blank"
+          className="flex h-12 w-12 items-center justify-center rounded-full border border-slate-300 transition ease-in-out hover:bg-slate-500"
+        >
           <Download size={30} />
-        </div>
-      </a>
+        </a>
+      </div>
     </div>
   );
 };
