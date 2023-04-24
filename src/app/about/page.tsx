@@ -4,18 +4,18 @@ const About = () => {
   return (
     <>
       <Navbar />
-      <main className="flex min-h-screen flex-col items-center justify-between max-w-xl pt-24 m-auto">
+      <main className="m-auto flex min-h-screen max-w-xl flex-col items-center justify-between pt-24">
         <div className="min-h-screen ">
-          <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div className="text-center">
-              <p className="mt-2 text-2xl leading-8 font-extrabold tracking-tight sm:text-3xl text-slate-200">
+              <p className="mt-2 text-2xl font-extrabold leading-8 tracking-tight text-slate-200 sm:text-3xl">
                 Transfer Your Files Across Devices
               </p>
             </div>
 
             <div className="mt-10">
               <div className="text-center">
-                <p className="mt-2 text-md text-slate-400">
+                <p className="text-md mt-2 text-slate-400">
                   My-Transfer is an app that allows you to temporarily upload
                   files to access them across devices. All files are
                   automatically deleted after 1 day to ensure your privacy and
@@ -31,7 +31,7 @@ const About = () => {
                   . To install My-Transfer as a PWA on your mobile device,
                   follow these steps:
                 </p>
-                <ol className="list-decimal mt-2 text-md text-gray-400 text-left">
+                <ol className="text-md mt-2 list-decimal text-left text-gray-400">
                   <li>
                     Open My-Transfer in your browser on your mobile device.
                   </li>
@@ -49,7 +49,7 @@ const About = () => {
                   <p className="text-lg font-medium">
                     Why I Created My-Transfer
                   </p>
-                  <p className="mt-4 text-md text-slate-400">
+                  <p className="text-md mt-4 text-slate-400">
                     My-Transfer was created to test out the developer experience
                     using Next.js, Vercel and Tailwind CSS. The functionality
                     was implemented easily with Firebase. I wanted to build a

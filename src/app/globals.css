@@ -9,10 +9,9 @@
 
 main {
   padding: 0 3rem;
-  max-width: 40rem;
+  max-width: 50rem;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-rgb));
+  @apply bg-slate-800 text-slate-200;
 }

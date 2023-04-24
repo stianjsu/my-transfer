@@ -8,12 +8,12 @@ export default function Error({
   reset: () => void;
 }) {
   return (
-    <main className="flex min-h-screen flex-col items-center pt-24 m-auto">
+    <main className="m-auto flex min-h-screen flex-col items-center pt-24">
       <h1>Something went wrong!</h1>
       <span>{error.message}</span>
       <button
         onClick={() => reset()}
-        className="h-8 bg-slate-900 rounded-md m-auto w-28 hover:font-bold"
+        className="m-auto h-8 w-28 rounded-md bg-slate-900 hover:font-bold"
       >
         Try again
       </button>

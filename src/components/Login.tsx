@@ -50,22 +50,22 @@ export default function Login() {
 
   if (loading)
     return (
-      <div className="flex justify-center items-center w-full h-[50vh] font-bold text-2xl mb-4">
+      <div className="mb-4 flex h-[50vh] w-full items-center justify-center text-2xl font-bold">
         <LoadingSpinner size={64} />
       </div>
     );
 
   return (
     <>
-      <div className="text-center w-full font-bold text-2xl mb-4">{view}</div>
-      <div className="w-full h-full">
+      <div className="mb-4 w-full text-center text-2xl font-bold">{view}</div>
+      <div className="h-full w-full">
         <input
           type="text"
           name="email"
           placeholder="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full mb-4 h-12 pl-4 bg-slate-300 rounded-md text-slate-600 outline-none"
+          className="mb-4 h-12 w-full rounded-md bg-slate-300 pl-4 text-slate-600 outline-none"
         />
         <input
           type="password"
@@ -73,10 +73,10 @@ export default function Login() {
           placeholder="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full mb-6 h-12 pl-4 bg-slate-300 rounded-md text-slate-600 outline-none"
+          className="mb-6 h-12 w-full rounded-md bg-slate-300 pl-4 text-slate-600 outline-none"
         />
         <button
-          className="h-8 bg-slate-900 rounded-md m-auto w-28 hover:font-bold"
+          className="m-auto h-8 w-28 rounded-md bg-slate-900 hover:font-bold"
           onClick={formSubmit}
         >
           {view}
@@ -84,7 +84,7 @@ export default function Login() {
       </div>
 
       <button
-        className="h-12 bg-slate-950 rounded-lg w-[10rem] m-auto hover:font-bold"
+        className="m-auto h-12 w-[10rem] rounded-lg bg-slate-950 hover:font-bold"
         onClick={toggleView}
       >
         Go to {view == "Login" ? "Signup" : "Login"}

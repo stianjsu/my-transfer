@@ -23,25 +23,25 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="flex fixed top-0 left-0 w-full h-16 border-b-2 border-slate-400">
-      <div className="flex flex-row h-full w-full max-w-xl mx-auto">
-        <div className="flex items-center grow">
+    <nav className="fixed left-0 top-0 flex h-16 w-full border-b-2 border-slate-400">
+      <div className="mx-auto flex h-full w-full max-w-[50rem] flex-row px-5">
+        <div className="flex grow items-center">
           <Link href={"/"}>
-            <span className="font-semibold text-2xl pl-4 hover:font-bold">
+            <span className="pl-4 text-2xl font-semibold hover:font-bold">
               My-Transfer
             </span>
           </Link>
         </div>
         <div className="flex items-center">
           <Link href={"/about"}>
-            <button className="w-20 h-3/4 hover:font-bold">About</button>
+            <button className="h-3/4 w-20 hover:font-bold">About</button>
           </Link>
         </div>
 
         {!!user && (
           <div className="flex items-center">
             <button
-              className="w-20 h-3/4 hover:font-bold"
+              className="h-3/4 w-20 hover:font-bold"
               onClick={handleSignOut}
             >
               Sign out

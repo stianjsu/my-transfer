@@ -12,7 +12,7 @@ import { FirebaseError } from "firebase/app";
 
 const FileDisplay = ({ file }: { file: FileData }) => {
   return (
-    <div className="flex flex-row w-full bg-slate-900 p-2 gap-4 rounded-lg items-center">
+    <div className="flex w-full flex-row items-center gap-4 rounded-lg bg-slate-900 p-2">
       <span className="grow">{file.name}</span>
       <div className="flex flex-col text-sm">
         <span>Size: {fileSizeConverter(file.sizeBytes)}</span>
@@ -21,8 +21,8 @@ const FileDisplay = ({ file }: { file: FileData }) => {
           {file.timeCreated.toLocaleDateString("no", { dateStyle: "short" })}
         </span>
       </div>
-      <a href={file.downloadUrl} target="_blank" className="w-12 h-12">
-        <div className="flex justify-center items-center w-full h-full transition ease-in-out border-slate-300 border hover:bg-slate-500 rounded-full">
+      <a href={file.downloadUrl} target="_blank" className="h-12 w-12">
+        <div className="flex h-full w-full items-center justify-center rounded-full border border-slate-300 transition ease-in-out hover:bg-slate-500">
           <Download size={30} />
         </div>
       </a>
@@ -72,7 +72,7 @@ export default function FilesDisplay() {
 
   if (loading)
     return (
-      <div className="flex justify-center items-center w-full h-[50vh] font-bold text-2xl mb-4">
+      <div className="mb-4 flex h-[50vh] w-full items-center justify-center text-2xl font-bold">
         <LoadingSpinner size={64} />
       </div>
     );
@@ -80,7 +80,7 @@ export default function FilesDisplay() {
   return (
     <>
       <UploadFile fileUploaded={fileUploaded} />
-      <div className="flex flex-col gap-2 w-full mt-8">
+      <div className="mt-8 flex w-full flex-col gap-2">
         {uploadedFiles.map((file, i) => {
           return <FileDisplay file={file} key={i} />;
         })}
