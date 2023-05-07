@@ -4,6 +4,8 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
+  sendPasswordResetEmail as firebaseResetPassword,
+  sendEmailVerification,
 } from "firebase/auth";
 import { auth } from "./firebaseInit";
 
@@ -21,4 +23,15 @@ export const signOut = async () => {
 
 export const onAuthChanged = (callback: (user: User | null) => void) => {
   return onAuthStateChanged(auth, callback);
+};
+
+export const sendResetPasswordEmail = async (email: string) => {
+  return await firebaseResetPassword(auth, email);
+};
+
+export const verifyUserEmail = async (user?: User | null) => {
+  if (!user) user = auth.currentUser;
+  if (user) return await sendEmailVerification(user);
+  else
+    throw { message: "User must be signed in", code: "auth/not-authenticated" };
 };

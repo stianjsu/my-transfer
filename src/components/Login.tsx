@@ -1,5 +1,10 @@
 "use client";
-import { register, signIn } from "@/firebase/authService";
+import {
+  register,
+  sendResetPasswordEmail,
+  signIn,
+  verifyUserEmail,
+} from "@/firebase/authService";
 import { Dispatch, SetStateAction, useState } from "react";
 import { LoadingSpinner } from "./Icons";
 import toast from "react-hot-toast";
@@ -18,6 +23,8 @@ export default function Login() {
   const [password2, setPassword2] = useState("");
 
   const [view, setView] = useState<"Login" | "Signup">("Login");
+
+  const [showResetPw, setShowResetPw] = useState(false);
 
   const [loading, setLoading] = useState(false);
 
@@ -49,7 +56,15 @@ export default function Login() {
       } else if (err.code == "auth/wrong-password") {
         toast.error("Wrong password!");
         setInputErr(passwordErr, setPasswordErr);
+      } else if (err.code == "auth/too-many-requests") {
+        toast.error(
+          "This account has been disabled due to too many failed login-attempts. Please reset your password"
+        );
+        setShowResetPw(true);
+        setInputErr(emailErr, setEmailErr);
+        setInputErr(passwordErr, setPasswordErr);
       } else {
+        console.log(err);
         toast.error("Something went wrong");
       }
     });
@@ -61,7 +76,7 @@ export default function Login() {
       setInputErr(passwordErr, setPasswordErr);
       return;
     }
-    await register(email, password).catch((err: FirebaseError) => {
+    let user = await register(email, password).catch((err: FirebaseError) => {
       if (err.code == "auth/invalid-email") {
         setInputErr(emailErr, setEmailErr);
         toast.error("Please provide a valid email");
@@ -74,6 +89,33 @@ export default function Login() {
         toast.error("Something went wrong when signing up");
       }
     });
+    if (user)
+      await verifyUserEmail(user.user).catch((err) =>
+        toast.error("Something went wrong when sending verification email")
+      );
+  };
+
+  const resetPassword = async (email: string) => {
+    setLoading(true);
+    let hasErr = false;
+    await sendResetPasswordEmail(email).catch((err) => {
+      hasErr = true;
+      if (err.code == "auth/invalid-email") {
+        setInputErr(emailErr, setEmailErr);
+        toast.error("Please provide a valid email");
+      } else if (err.code == "auth/user-not-found") {
+        toast.error("No user exists with this email");
+        setInputErr(emailErr, setEmailErr);
+      } else {
+        setInputErr(emailErr, setEmailErr);
+        toast.error("Something went wrong when sending reset password email");
+      }
+    });
+    if (!hasErr) {
+      setShowResetPw(false);
+      toast.success("A reset password email was sent to " + email);
+    }
+    setLoading(false);
   };
 
   if (loading)
@@ -93,7 +135,10 @@ export default function Login() {
               ? "border-b-2 font-bold"
               : "border-slate-500 hover:border-b")
           }
-          onClick={() => setView("Login")}
+          onClick={() => {
+            setView("Login");
+            setShowResetPw(false);
+          }}
         >
           Login
         </button>
@@ -121,17 +166,19 @@ export default function Login() {
             (emailErr[0] ? "border-2" : null)
           }
         />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className={
-            "mb-4 h-12 w-full rounded-md border-red-500 bg-slate-300 pl-4 text-slate-600 outline-none " +
-            (passwordErr[0] ? "border-2" : null)
-          }
-        />
+        {!showResetPw && (
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className={
+              "mb-4 h-12 w-full rounded-md border-red-500 bg-slate-300 pl-4 text-slate-600 outline-none " +
+              (passwordErr[0] ? "border-2" : null)
+            }
+          />
+        )}
         {view == "Signup" && (
           <input
             type="password"
@@ -145,12 +192,41 @@ export default function Login() {
             }
           />
         )}
-        <button
-          className="m-auto h-8 w-28 rounded-md bg-slate-900 hover:font-bold"
-          onClick={formSubmit}
-        >
-          {view}
-        </button>
+        <div className="flex w-full justify-between">
+          {showResetPw && view == "Login" ? (
+            <>
+              <button
+                className="h-12 rounded-md bg-slate-900 px-4 hover:font-bold"
+                onClick={() => resetPassword(email)}
+              >
+                Reset Password
+              </button>
+              <button
+                className="h-12 w-28 rounded-md bg-slate-900 px-4 hover:font-bold"
+                onClick={() => setShowResetPw(false)}
+              >
+                Cancel
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                className="h-12 w-28 rounded-md bg-slate-900 hover:font-bold"
+                onClick={formSubmit}
+              >
+                {view}
+              </button>
+              {view != "Signup" && (
+                <button
+                  className="h-12 rounded-md bg-slate-900 px-4 hover:font-bold"
+                  onClick={() => setShowResetPw(true)}
+                >
+                  Reset Password
+                </button>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </>
   );

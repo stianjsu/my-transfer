@@ -8,6 +8,7 @@ import { Download, LoadingSpinner } from "./Icons";
 import { fileSizeConverter } from "@/firebase/util";
 import { UploadResult } from "firebase/storage";
 import { toast } from "react-hot-toast";
+import VerifyPrompt from "./VerifyPrompt";
 
 const FileDisplay = ({ file }: { file: FileData }) => {
   return (
@@ -83,6 +84,14 @@ export default function FilesDisplay() {
         <LoadingSpinner size={64} />
       </div>
     );
+
+  if (user?.emailVerified == false) {
+    return (
+      <div className="mb-4 flex h-[50vh] w-full items-center justify-center text-2xl font-bold">
+        <VerifyPrompt user={user} />
+      </div>
+    );
+  }
 
   return (
     <>
