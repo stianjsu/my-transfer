@@ -45,7 +45,7 @@ const About = async () => {
                   <li>Launch the app from your home screen.</li>
                 </ol>
 
-                <div className="mt-12">
+                <div className="my-12">
                   <p className="text-lg font-medium">
                     Why I Created My-Transfer
                   </p>

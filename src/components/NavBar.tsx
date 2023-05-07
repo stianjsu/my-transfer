@@ -5,9 +5,11 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const [user, setUser] = useState<User | null>(null);
+  const router = useRouter();
 
   const pathName = usePathname();
 
@@ -22,6 +24,7 @@ export default function Navbar() {
 
   const handleSignOut = async () => {
     await signOut();
+    router.push("/");
     toast.success("Signed out");
   };
 

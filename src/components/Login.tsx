@@ -192,20 +192,20 @@ export default function Login() {
             }
           />
         )}
-        <div className="flex w-full justify-between">
+        <div className="flex w-full flex-wrap justify-around gap-1">
           {showResetPw && view == "Login" ? (
             <>
-              <button
-                className="h-12 rounded-md bg-slate-900 px-4 hover:font-bold"
-                onClick={() => resetPassword(email)}
-              >
-                Reset Password
-              </button>
               <button
                 className="h-12 w-28 rounded-md bg-slate-900 px-4 hover:font-bold"
                 onClick={() => setShowResetPw(false)}
               >
                 Cancel
+              </button>
+              <button
+                className="h-12 rounded-md bg-slate-900 px-4 hover:font-bold"
+                onClick={() => resetPassword(email)}
+              >
+                Reset Password
               </button>
             </>
           ) : (

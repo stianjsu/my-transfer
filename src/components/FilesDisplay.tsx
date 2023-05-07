@@ -4,7 +4,7 @@ import { User } from "firebase/auth";
 import { useEffect, useState } from "react";
 import firebaseService, { dummydata, getFile } from "@/firebase/storageService";
 import UploadFile from "./UploadFile";
-import { Download, LoadingSpinner } from "./Icons";
+import { Download, LoadingSpinner, RefreshIcon } from "./Icons";
 import { fileSizeConverter } from "@/firebase/util";
 import { UploadResult } from "firebase/storage";
 import { toast } from "react-hot-toast";
@@ -17,7 +17,7 @@ const FileDisplay = ({ file }: { file: FileData }) => {
         {file.name}
       </span>
 
-      <div className="flex min-w-max flex-col text-sm">
+      <div className="flex min-w-[85px] flex-col text-sm">
         <span>
           {/* Uploaded:{" "} */}
           {file.timeCreated.toLocaleDateString("no", { dateStyle: "short" })}
@@ -71,19 +71,23 @@ export default function FilesDisplay() {
     }
   }, [user]);
 
+  const refetchFiles = async () => {
+    setLoading(true);
+    let files = await firebaseService.getFiles().catch(() => {
+      setLoading(false);
+      toast.error("Failed to get your files 😢");
+    });
+    if (files) setFiles(files);
+    setUploadedFiles([]);
+    setLoading(false);
+  };
+
   const fileUploaded = async (result: UploadResult) => {
     const newFile = await getFile(result.ref).catch(() => {
       toast.error("Failed to get your uploaded file. Please refresh");
     });
     if (newFile) setUploadedFiles((prev) => [newFile, ...prev]);
   };
-
-  if (loading)
-    return (
-      <div className="mb-4 flex h-[50vh] w-full items-center justify-center text-2xl font-bold">
-        <LoadingSpinner size={64} />
-      </div>
-    );
 
   if (user?.emailVerified == false) {
     return (
@@ -96,14 +100,31 @@ export default function FilesDisplay() {
   return (
     <>
       <UploadFile fileUploaded={fileUploaded} />
-      <div className="mt-8 flex w-full flex-col gap-2">
-        {uploadedFiles.map((file, i) => {
-          return <FileDisplay file={file} key={i} />;
-        })}
-        {files.map((file, i) => {
-          return <FileDisplay file={file} key={i} />;
-        })}
-      </div>
+
+      {loading ? (
+        <div className="mb-4 flex h-[50vh] w-full items-center justify-center text-2xl font-bold">
+          <LoadingSpinner size={64} />
+        </div>
+      ) : (
+        <>
+          <div className="my-6 flex w-full items-center justify-end gap-2 align-middle">
+            <span>Refresh</span>
+            <div
+              className="mr-6 cursor-pointer rounded-lg bg-slate-900 p-2 hover:bg-slate-700"
+              onClick={refetchFiles}
+            >
+              <RefreshIcon size={28} />
+            </div>
+          </div>
+          <div className="flex w-full flex-col gap-2">
+            {[...uploadedFiles, ...files]
+              .sort((a, b) => b.timeCreated.getTime() - a.timeCreated.getTime())
+              .map((file, i) => {
+                return <FileDisplay file={file} key={i} />;
+              })}
+          </div>
+        </>
+      )}
     </>
   );
 }
