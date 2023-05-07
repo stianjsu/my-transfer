@@ -3,10 +3,13 @@ import { onAuthChanged, signOut } from "@/firebase/authService";
 import { User } from "firebase/auth";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import toast from "react-hot-toast";
 
 export default function Navbar() {
   const [user, setUser] = useState<User | null>(null);
+
+  const pathName = usePathname();
 
   useEffect(() => {
     let unsub = onAuthChanged((user) => {
@@ -24,8 +27,8 @@ export default function Navbar() {
 
   return (
     <nav className="fixed left-0 top-0 flex h-16 w-full border-b-2 border-slate-400 bg-slate-800">
-      <div className="mx-auto flex h-full w-full max-w-[50rem] flex-row px-5">
-        <div className="flex grow items-center">
+      <div className="mx-auto flex h-full w-full max-w-[50rem] flex-row justify-around px-5 sm:justify-normal">
+        <div className="hidden grow items-center sm:flex">
           <Link href={"/"}>
             <span className="pl-4 text-2xl font-semibold hover:font-bold">
               My-Transfer
@@ -33,15 +36,34 @@ export default function Navbar() {
           </Link>
         </div>
         <div className="flex items-center">
-          <Link href={"/about"}>
-            <button className="h-3/4 w-20 hover:font-bold">About</button>
+          <Link href={"/"} className="h-full">
+            <button
+              className={
+                "h-full w-24 hover:font-bold " +
+                (pathName == "/" ? " border-b-2 font-bold" : "")
+              }
+            >
+              Home
+            </button>
+          </Link>
+        </div>
+        <div className="flex items-center">
+          <Link href={"/about"} className="h-full">
+            <button
+              className={
+                "h-full w-24 hover:font-bold " +
+                (pathName == "/about" ? "border-b-2 font-bold" : "")
+              }
+            >
+              About
+            </button>
           </Link>
         </div>
 
         {!!user && (
           <div className="flex items-center">
             <button
-              className="h-3/4 w-20 hover:font-bold"
+              className="h-full w-24 hover:font-bold"
               onClick={handleSignOut}
             >
               Sign out

@@ -1,6 +1,6 @@
 import Navbar from "@/components/NavBar";
 
-const About = () => {
+const About = async () => {
   return (
     <>
       <Navbar />
