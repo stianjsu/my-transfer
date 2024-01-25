@@ -1,5 +1,3 @@
-import { SVGAttributes } from "react";
-
 export function Download({ size }: { size: number }) {
   return (
     <svg
