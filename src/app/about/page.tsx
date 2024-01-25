@@ -1,4 +1,4 @@
-import Navbar from "@/components/NavBar";
+import Navbar from "@/components/NavBar"
 
 const About = async () => {
   return (
@@ -14,7 +14,7 @@ const About = async () => {
 
           <div className="mt-10">
             <div className="text-center">
-              <p className="text-md mt-2 text-slate-400">
+              <p className="mt-2 text-base text-slate-400">
                 My-Transfer is an app that allows you to temporarily upload
                 files to access them across devices. All files are automatically
                 deleted after 1 day to ensure your privacy and security. You can
@@ -30,7 +30,7 @@ const About = async () => {
                 . To install My-Transfer as a PWA on your mobile device, follow
                 these steps:
               </p>
-              <ol className="text-md mt-2 list-decimal text-left text-gray-400">
+              <ol className="mt-2 list-decimal text-left text-base text-gray-400">
                 <li>Open My-Transfer in your browser on your mobile device.</li>
                 <li>
                   Click on the &quot;share&quot; button for iOS or your browsers
@@ -45,7 +45,7 @@ const About = async () => {
 
               <div className="my-12">
                 <p className="text-lg font-medium">Why I Created My-Transfer</p>
-                <p className="text-md mt-4 text-slate-400">
+                <p className="mt-4 text-base text-slate-400">
                   My-Transfer was created to test out the developer experience
                   using Next.js, Vercel and Tailwind CSS. The functionality was
                   implemented easily with Firebase. I wanted to build a simple
@@ -59,7 +59,7 @@ const About = async () => {
         </div>
       </main>
     </>
-  );
-};
+  )
+}
 
-export default About;
+export default About
