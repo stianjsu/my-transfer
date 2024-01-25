@@ -1,5 +1,5 @@
 import "./globals.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 const APP_NAME = "My Transfer";
 const APP_DEFAULT_TITLE = "My Transfer";
@@ -14,7 +14,6 @@ export const metadata: Metadata = {
   },
   description: APP_DESCRIPTION,
   manifest: "/manifest.json",
-  themeColor: "#1e293b",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -28,6 +27,10 @@ export const metadata: Metadata = {
     apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180" }],
   },
 };
+
+export const viewport: Viewport = {
+  themeColor: "#1e293b",
+}
 
 export default function RootLayout({
   children,

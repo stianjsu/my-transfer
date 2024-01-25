@@ -119,8 +119,8 @@ export default function FilesDisplay() {
           <div className="flex w-full flex-col gap-2">
             {[...uploadedFiles, ...files]
               .sort((a, b) => b.timeCreated.getTime() - a.timeCreated.getTime())
-              .map((file, i) => {
-                return <FileDisplay file={file} key={i} />;
+              .map((file) => {
+                return <FileDisplay file={file} key={file.timeCreated.toString()} />;
               })}
           </div>
         </>
