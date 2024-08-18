@@ -10,6 +10,7 @@ export default {
     host: env.POSTGRES_HOST!,
     database: env.POSTGRES_DATABASE!,
     password: env.POSTGRES_PASSWORD!,
+    ssl: "require",
   },
   tablesFilter: [
     `mytransfer_${env.VERCEL_ENV !== "production" ? "preview_" : ""}*`,
