@@ -1,17 +1,23 @@
 import FilesDisplay from "@/components/FilesDisplay"
-import { LoadingSpinner } from "@/components/Icons"
 import Navbar from "@/components/NavBar"
+import { db } from "../server/db"
 
-const Home = () => {
+const Home = async () => {
+  const uplodedFiles = await db.query.posts.findMany()
+
   return (
     <>
       <Navbar />
       <main className="m-auto flex min-h-screen flex-col pt-24">
-        <div className="mb-4 flex h-[50vh] w-full items-center justify-center text-2xl font-bold">
-          <LoadingSpinner size={64} />
-        </div>
-
         <FilesDisplay />
+        {uplodedFiles.map((file) => {
+          return (
+            <div key={file.id}>
+              {file.name}
+              {file.id}
+            </div>
+          )
+        })}
       </main>
     </>
   )

@@ -6,7 +6,7 @@ const FileDisplay = ({
   file: { name: string; timeCreated: Date; downloadUrl: string }
 }) => {
   return (
-    <div className="flex h-24 w-full flex-row items-center gap-4 rounded-lg bg-slate-900 p-2 sm:h-20 ">
+    <div className="flex h-24 w-full flex-row items-center gap-4 rounded-lg bg-slate-900 p-2 sm:h-20">
       <span className="line-clamp-3 grow break-words text-sm sm:line-clamp-3 sm:text-base">
         {file.name}
       </span>
@@ -35,7 +35,7 @@ const FileDisplay = ({
 export default function FilesDisplay() {
   return (
     <>
-      {true ? (
+      {false ? (
         <div className="mb-4 flex h-[50vh] w-full items-center justify-center text-2xl font-bold">
           <LoadingSpinner size={64} />
         </div>
@@ -50,7 +50,28 @@ export default function FilesDisplay() {
           <div className="flex w-full flex-col gap-2">
             <FileDisplay
               file={{
-                name: "test",
+                name: "test.pdf",
+                downloadUrl: "testing",
+                timeCreated: new Date(Date.now()),
+              }}
+            />
+            <FileDisplay
+              file={{
+                name: "test.pdf",
+                downloadUrl: "testing",
+                timeCreated: new Date(Date.now()),
+              }}
+            />
+            <FileDisplay
+              file={{
+                name: "test.pdf",
+                downloadUrl: "testing",
+                timeCreated: new Date(Date.now()),
+              }}
+            />
+            <FileDisplay
+              file={{
+                name: "test.pdf",
                 downloadUrl: "testing",
                 timeCreated: new Date(Date.now()),
               }}
