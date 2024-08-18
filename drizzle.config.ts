@@ -1,14 +1,17 @@
-import { type Config } from "drizzle-kit";
+import { type Config } from "drizzle-kit"
+import { env } from "./src/env"
 
 export default {
   schema: "./src/server/db/schema.ts",
   dialect: "postgresql",
   dbCredentials: {
-    url: process.env.DATABASE_URL!,
-    database: "mytransfer",
-    host: "localhost:5432",
-    password: "4dJ4twWclXy-RxsC",
-    user: "postgres"
+    url: env.POSTGRES_URL!,
+    user: env.POSTGRES_USER!,
+    host: env.POSTGRES_HOST!,
+    database: env.POSTGRES_DATABASE!,
+    password: env.POSTGRES_PASSWORD!,
   },
-  tablesFilter: ["mytransfer_*"],
-} satisfies Config;
+  tablesFilter: [
+    `mytransfer_${env.VERCEL_ENV !== "production" ? "preview_" : ""}*`,
+  ],
+} satisfies Config

@@ -1,5 +1,7 @@
-import { drizzle } from "drizzle-orm/postgres-js"
+import { drizzle as drizzlePostgres } from "drizzle-orm/postgres-js"
+import { drizzle as drizzleVercel } from "drizzle-orm/vercel-postgres"
 import postgres from "postgres"
+import { sql } from "@vercel/postgres"
 
 import * as schema from "./schema"
 
@@ -11,7 +13,14 @@ const globalForDb = globalThis as unknown as {
   conn: postgres.Sql | undefined
 }
 
-const conn = globalForDb.conn ?? postgres(process.env.DATABASE_URL || "")
-if (process.env.NODE_ENV !== "production") globalForDb.conn = conn
+let db_conn
+if (process.env.NODE_ENV === "production") {
+  db_conn = drizzleVercel(sql, { schema })
+} else {
+  const conn = globalForDb.conn ?? postgres(process.env.DATABASE_URL || "")
+  globalForDb.conn = conn
 
-export const db = drizzle(conn, { schema })
+  db_conn = drizzlePostgres(conn, { schema })
+}
+
+export const db = db_conn
