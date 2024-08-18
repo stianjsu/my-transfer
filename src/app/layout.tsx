@@ -1,10 +1,10 @@
-import "./globals.css";
-import type { Metadata, Viewport } from "next";
+import "./globals.css"
+import type { Metadata, Viewport } from "next"
 
-const APP_NAME = "My Transfer";
-const APP_DEFAULT_TITLE = "My Transfer";
-const APP_TITLE_TEMPLATE = "%s - PWA App";
-const APP_DESCRIPTION = "Transfer your files accross devices";
+const APP_NAME = "My Transfer"
+const APP_DEFAULT_TITLE = "My Transfer"
+const APP_TITLE_TEMPLATE = "%s - PWA App"
+const APP_DESCRIPTION = "Transfer your files accross devices"
 
 export const metadata: Metadata = {
   applicationName: APP_NAME,
@@ -26,20 +26,20 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
     apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180" }],
   },
-};
+}
 
 export const viewport: Viewport = {
   themeColor: "#1e293b",
-};
+}
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en">
       <body>{children}</body>
     </html>
-  );
+  )
 }

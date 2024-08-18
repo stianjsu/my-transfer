@@ -1,11 +1,11 @@
-"use client";
+"use client"
 
 export default function Error({
   error,
   reset,
 }: {
-  error: Error;
-  reset: () => void;
+  error: Error
+  reset: () => void
 }) {
   return (
     <main className="m-auto flex min-h-screen flex-col items-center pt-24">
@@ -18,5 +18,5 @@ export default function Error({
         Try again
       </button>
     </main>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "next/link"
 
 export default function Navbar() {
   return (
@@ -13,12 +13,12 @@ export default function Navbar() {
         </div>
         <div className="flex items-center">
           <Link href={"/"} className="h-full">
-            <button className={"h-full w-24 hover:font-bold "}>Home</button>
+            <button className={"h-full w-24 hover:font-bold"}>Home</button>
           </Link>
         </div>
         <div className="flex items-center">
           <Link href={"/about"} className="h-full">
-            <button className={"h-full w-24 hover:font-bold "}>About</button>
+            <button className={"h-full w-24 hover:font-bold"}>About</button>
           </Link>
         </div>
 
@@ -27,5 +27,5 @@ export default function Navbar() {
         </div>
       </div>
     </nav>
-  );
+  )
 }
