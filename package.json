@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@ducanh2912/next-pwa": "^10.2.8",
+    "@t3-oss/env-nextjs": "^0.11.0",
     "@vercel/postgres": "^0.9.0",
     "autoprefixer": "10.4.20",
     "drizzle-orm": "^0.33.0",

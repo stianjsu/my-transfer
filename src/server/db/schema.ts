@@ -2,6 +2,7 @@
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
 import { sql } from "drizzle-orm"
+import { env } from "@/env"
 import {
   index,
   pgTableCreator,
@@ -16,7 +17,10 @@ import {
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const createTable = pgTableCreator((name) => `mytransfer_${name}`)
+export const createTable = pgTableCreator(
+  (name) =>
+    `mytransfer_${env.VERCEL_ENV !== "production" ? "preview_" : ""}${name}`,
+)
 
 export const posts = createTable(
   "uploaded_files",
