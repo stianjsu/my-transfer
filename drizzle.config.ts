@@ -12,7 +12,5 @@ export default {
     password: env.POSTGRES_PASSWORD!,
     ssl: env.VERCEL_ENV !== "development" ? "require" : undefined,
   },
-  tablesFilter: [
-    `mytransfer_${env.VERCEL_ENV !== "production" ? "preview_" : ""}*`,
-  ],
+  tablesFilter: [`mytransfer_*`],
 } satisfies Config

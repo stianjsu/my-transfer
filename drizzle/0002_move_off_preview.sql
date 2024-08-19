@@ -1,0 +1,1 @@
+ALTER TABLE "mytransfer_preview_uploaded_files" RENAME TO "mytransfer_uploaded_files";
