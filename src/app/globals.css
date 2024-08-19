@@ -13,5 +13,5 @@ main {
 }
 
 body {
-  @apply bg-slate-800 text-slate-200;
+  @apply bg-slate-800 text-slate-50;
 }

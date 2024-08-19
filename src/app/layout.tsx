@@ -1,5 +1,8 @@
 import "./globals.css"
 import type { Metadata, Viewport } from "next"
+import { ClerkProvider } from "@clerk/nextjs"
+import Navbar from "@/components/NavBar"
+import { dark } from "@clerk/themes"
 
 const APP_NAME = "My Transfer"
 const APP_DEFAULT_TITLE = "My Transfer"
@@ -38,8 +41,24 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+        variables: {
+          colorBackground: "#1e293b",
+          colorText: "#f8fafc",
+          colorTextSecondary: "#f8fafc",
+          colorPrimary: "#f8fafc",
+          fontSize: "1rem",
+        },
+      }}
+    >
+      <html lang="en">
+        <body>
+          <Navbar />
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }
