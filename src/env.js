@@ -20,7 +20,6 @@ export const env = createEnv({
       .enum(["development", "preview", "production"])
       .default("development"),
     UPLOADTHING_SECRET: z.string(),
-    UPLOADTHING_APP_ID: z.string(),
   },
 
   /**
@@ -29,6 +28,7 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
+    NEXT_PUBLIC_UPLOADTHING_APP_ID: z.string(),
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
   },
 
@@ -46,7 +46,7 @@ export const env = createEnv({
     POSTGRES_DATABASE: process.env.POSTGRES_DATABASE,
     VERCEL_ENV: process.env.VERCEL_ENV,
     UPLOADTHING_SECRET: process.env.UPLOADTHING_SECRET,
-    UPLOADTHING_APP_ID: process.env.UPLOADTHING_APP_ID,
+    NEXT_PUBLIC_UPLOADTHING_APP_ID: process.env.NEXT_PUBLIC_UPLOADTHING_APP_ID,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**

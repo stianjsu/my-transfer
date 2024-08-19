@@ -1,26 +1,30 @@
-import FilesDisplay from "@/components/FilesDisplay"
+import { FileDisplay } from "@/components/FilesDisplay"
 import Navbar from "@/components/NavBar"
 import { db } from "../server/db"
+import { FILE_URL } from "@/components/uploadthing"
+import DropZone from "@/components/Dropzone"
 
 const Home = async () => {
-  const uplodedFiles = await db.query.posts.findMany()
+  const uplodedFiles = await db.query.uploadedFilesTable.findMany()
 
   return (
     <>
       <Navbar />
-      <main className="m-auto flex min-h-screen flex-col pt-24">
-        <FilesDisplay />
-        {/* <img
-          src={FILE_URL + "/913c73dd-5348-4f30-9a8a-7e5bb25d2f7d-smowyx.jpg"}
-        /> */}
-        {uplodedFiles.map((file) => {
-          return (
-            <div key={file.key}>
-              {file.name}
-              {file.key}
-            </div>
-          )
-        })}
+      <main className="m-auto flex min-h-screen flex-col gap-4 pt-24">
+        <DropZone />
+        <div className="flex w-full flex-col gap-2">
+          {uplodedFiles.map((file) => {
+            return (
+              <FileDisplay
+                key={file.key}
+                name={file.name}
+                downloadUrl={FILE_URL + file.key}
+                timeCreated={file.createdAt}
+                size={file.size}
+              />
+            )
+          })}
+        </div>
       </main>
     </>
   )
