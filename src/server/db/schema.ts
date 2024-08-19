@@ -6,9 +6,9 @@ import { env } from "@/env"
 import {
   index,
   pgTableCreator,
-  serial,
   timestamp,
   varchar,
+  integer,
 } from "drizzle-orm/pg-core"
 
 /**
@@ -25,16 +25,16 @@ export const createTable = pgTableCreator(
 export const posts = createTable(
   "uploaded_files",
   {
-    id: serial("id").primaryKey(),
-    name: varchar("name", { length: 256 }),
+    key: varchar("key", { length: 128 }).primaryKey().notNull(),
+    name: varchar("name", { length: 256 }).notNull(),
+    userId: varchar("userId", { length: 128 }).notNull(),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
-      () => new Date(),
-    ),
+    size: integer("size").notNull(),
   },
   (example) => ({
-    nameIndex: index("name_idx").on(example.name),
+    userIdIndex: index("userId_idx").on(example.userId),
+    createdAtIndex: index("created_at_idx").on(example.createdAt),
   }),
 )
