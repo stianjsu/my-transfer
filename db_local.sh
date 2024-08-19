@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -a
-source .env.local
+source ./.env.local
 
 while getopts 'sp' opt; do
   case "$opt" in
@@ -12,5 +12,10 @@ while getopts 'sp' opt; do
       npm run db:push
       exit 1
       ;;
+    
   esac
 done
+
+echo "Missing input"
+echo "  -s: start drizzle_studio"
+echo "  -p: push db changes"
