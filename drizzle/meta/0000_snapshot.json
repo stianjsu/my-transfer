@@ -1,16 +1,16 @@
 {
-  "id": "ab848729-5854-440a-8250-4fe13d0a1487",
+  "id": "6b3554c9-f50a-4af5-a706-6102bd233b93",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.mytransfer_preview_uploaded_files": {
-      "name": "mytransfer_preview_uploaded_files",
+    "public.mytransfer_uploaded_files": {
+      "name": "mytransfer_uploaded_files",
       "schema": "",
       "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
+        "key": {
+          "name": "key",
+          "type": "varchar(128)",
           "primaryKey": true,
           "notNull": true
         },
@@ -18,7 +18,13 @@
           "name": "name",
           "type": "varchar(256)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
         },
         "created_at": {
           "name": "created_at",
@@ -27,19 +33,34 @@
           "notNull": true,
           "default": "CURRENT_TIMESTAMP"
         },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp with time zone",
+        "size": {
+          "name": "size",
+          "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         }
       },
       "indexes": {
-        "name_idx": {
-          "name": "name_idx",
+        "userId_idx": {
+          "name": "userId_idx",
           "columns": [
             {
-              "expression": "name",
+              "expression": "userId",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "created_at_idx": {
+          "name": "created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
               "isExpression": false,
               "asc": true,
               "nulls": "last"

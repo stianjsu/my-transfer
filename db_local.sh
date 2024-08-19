@@ -2,7 +2,7 @@
 set -a
 source ./.env.local
 
-while getopts 'spmg' opt; do
+while getopts 'spmgc' opt; do
   case "$opt" in
     s)
       npm run db:studio
@@ -20,6 +20,10 @@ while getopts 'spmg' opt; do
     g)
       read -p "name for migration: " MIG_NAME
       npm run db:generate -- --name=$MIG_NAME
+      exit 1
+      ;;
+    c)
+      npx drizzle-kit check
       exit 1
       ;;
   esac
