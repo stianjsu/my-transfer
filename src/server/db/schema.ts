@@ -18,7 +18,7 @@ import {
  */
 export const createTable = pgTableCreator((name) => `mytransfer_${name}`)
 
-export const posts = createTable(
+export const uploadedFilesTable = createTable(
   "uploaded_files",
   {
     key: varchar("key", { length: 128 }).primaryKey().notNull(),

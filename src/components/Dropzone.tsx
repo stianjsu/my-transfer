@@ -6,7 +6,7 @@ export default function DropZone() {
   return (
     <UploadDropzone
       className="bg-slate-50"
-      endpoint="imageUploader"
+      endpoint="fileUploader"
       onClientUploadComplete={(res) => {
         // Do something with the response
         console.log("Files: ", res)
