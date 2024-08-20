@@ -2,6 +2,7 @@ import { db } from "@/server/db"
 import { uploadedFilesTable } from "@/server/db/schema"
 import { createUploadthing, type FileRouter } from "uploadthing/next"
 import { UploadThingError } from "uploadthing/server"
+import { auth } from "@clerk/nextjs/server"
 
 const f = createUploadthing()
 
@@ -12,13 +13,13 @@ export const utFileRouter = {
     // Set permissions and file types for this FileRoute
     .middleware(async (/* { req } */) => {
       // This code runs on your server before upload
-      const user = { id: "fakeId" } /* await auth(req) */
+      const user = auth()
 
       // If you throw, the user will not be able to upload
-      if (!user) throw new UploadThingError("Unauthorized")
+      if (!user || !user.userId) throw new UploadThingError("Unauthorized")
 
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
-      return { userId: user.id }
+      return { userId: user.userId }
     })
     .onUploadComplete(async ({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
@@ -33,7 +34,15 @@ export const utFileRouter = {
         userId: metadata.userId,
       })
       // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
-      return { uploadedBy: metadata.userId }
+      return {
+        uploadedBy: metadata.userId,
+        file: {
+          key: file.key,
+          name: file.name,
+          size: file.size,
+          userId: metadata.userId,
+        },
+      }
     }),
 } satisfies FileRouter
 
