@@ -6,26 +6,36 @@ import { auth } from "@clerk/nextjs/server"
 
 const f = createUploadthing()
 
-// FileRouter for your app, can contain multiple FileRoutes
+const FILE_TYPE_OPTIONS = {
+  maxFileSize: "128MB",
+  maxFileCount: 10,
+} as const
+
+const ALLOWED_FILE_TYPES = [
+  "image",
+  "video",
+  "audio",
+  "pdf",
+  "text",
+  "blob",
+] as const
+
+const FILE_UPLOAD_CONFIG = ALLOWED_FILE_TYPES.reduce(
+  (acc, item) => ((acc[item] = FILE_TYPE_OPTIONS), acc),
+  {} as Record<(typeof ALLOWED_FILE_TYPES)[number], typeof FILE_TYPE_OPTIONS>,
+)
+
 export const utFileRouter = {
-  // Define as many FileRoutes as you like, each with a unique routeSlug
-  fileUploader: f({ image: { maxFileSize: "4MB" } })
-    // Set permissions and file types for this FileRoute
+  fileUploader: f(FILE_UPLOAD_CONFIG)
     .middleware(async (/* { req } */) => {
-      // This code runs on your server before upload
       const user = auth()
 
-      // If you throw, the user will not be able to upload
       if (!user || !user.userId) throw new UploadThingError("Unauthorized")
 
-      // Whatever is returned here is accessible in onUploadComplete as `metadata`
       return { userId: user.userId }
     })
     .onUploadComplete(async ({ metadata, file }) => {
-      // This code RUNS ON YOUR SERVER after upload
       console.log("Upload complete for userId:", metadata.userId)
-
-      console.log("file url", file.url)
 
       await db.insert(uploadedFilesTable).values({
         key: file.key,
@@ -33,7 +43,7 @@ export const utFileRouter = {
         size: file.size,
         userId: metadata.userId,
       })
-      // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
+
       return {
         uploadedBy: metadata.userId,
         file: {
