@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next"
 import { ClerkProvider } from "@clerk/nextjs"
 import Navbar from "@/components/NavBar"
 import { dark } from "@clerk/themes"
+import { Toaster } from "@/components/ui/sonner"
 
 const APP_NAME = "My Transfer"
 const APP_DEFAULT_TITLE = "My Transfer"
@@ -57,6 +58,7 @@ export default function RootLayout({
         <body>
           <Navbar />
           {children}
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>

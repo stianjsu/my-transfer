@@ -2,7 +2,6 @@ import {
   generateUploadButton,
   generateUploadDropzone,
 } from "@uploadthing/react"
-
 import { env } from "@/env"
 
 import type { UtFileRouter } from "@/app/api/uploadthing/core"

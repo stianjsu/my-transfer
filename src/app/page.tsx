@@ -1,7 +1,7 @@
 import { FileDisplay } from "@/components/FilesDisplay"
 import { db } from "../server/db"
 import { FILE_URL } from "@/components/uploadthing"
-import DropZone from "@/components/Dropzone"
+import { DropZone } from "@/components/Dropzone"
 import { auth } from "@clerk/nextjs/server"
 
 const Home = async () => {

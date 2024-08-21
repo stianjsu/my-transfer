@@ -1,20 +1,22 @@
 "use client"
 
 import { UploadDropzone } from "@/components/uploadthing"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
-export default function DropZone() {
+export function DropZone() {
+  const router = useRouter()
+
   return (
     <UploadDropzone
       className="bg-slate-50"
       endpoint="fileUploader"
-      onClientUploadComplete={(res) => {
+      onClientUploadComplete={() => {
         // Do something with the response
-        console.log("Files: ", res)
-        alert("Upload Completed")
+        router.refresh()
       }}
       onUploadError={(error: Error) => {
-        // Do something with the error.
-        alert(`ERROR! ${error.message}`)
+        toast.error(error.message)
       }}
     />
   )
