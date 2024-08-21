@@ -27,10 +27,13 @@ const FILE_UPLOAD_CONFIG = ALLOWED_FILE_TYPES.reduce(
 
 export const utFileRouter = {
   fileUploader: f(FILE_UPLOAD_CONFIG)
-    .middleware(async (/* { req } */) => {
+    .middleware(async ({ files }) => {
       const user = auth()
-
       if (!user || !user.userId) throw new UploadThingError("Unauthorized")
+
+      const totalSize = files.reduce((acc, next) => acc + next.size, 0)
+      if (totalSize > 128 * 10 ** 6)
+        throw new UploadThingError("Total File size cannot exceed 128MB")
 
       return { userId: user.userId }
     })
