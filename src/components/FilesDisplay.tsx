@@ -34,8 +34,8 @@ export const FileDisplay = ({
       <div className="size-12 min-w-max">
         <a
           href={downloadUrl}
-          target="_blank"
           className="flex size-12 items-center justify-center rounded-full border border-slate-300 transition ease-in-out hover:bg-slate-500"
+          download
         >
           <Download size={30} />
         </a>
