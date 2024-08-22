@@ -11,8 +11,14 @@ export function DropZone() {
   return (
     <>
       <UploadDropzone
-        className="flex gap-1 bg-slate-50 p-4 ut-button:h-8 ut-button:max-w-36 ut-button:bg-slate-700 ut-button:text-sm ut-label:text-slate-700"
         endpoint="fileUploader"
+        appearance={{
+          container: "flex bg-slate-50 p-4",
+          uploadIcon: "max-w-full",
+          label: "max-w-full text-wrap text-slate-700",
+          allowedContent: "hidden",
+          button: "h-8 max-w-full bg-slate-700 text-sm",
+        }}
         onClientUploadComplete={() => {
           router.refresh()
         }}
@@ -23,7 +29,7 @@ export function DropZone() {
       <div className="flex w-full items-center justify-end gap-2 align-middle">
         <span>Refresh</span>
         <div
-          className="mr-6 cursor-pointer rounded-lg bg-slate-900 p-2 hover:bg-slate-700"
+          className="cursor-pointer rounded-lg bg-slate-900 p-2 hover:bg-slate-700"
           onClick={router.refresh}
         >
           <RefreshIcon size={28} />
