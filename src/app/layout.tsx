@@ -4,6 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs"
 import Navbar from "@/components/NavBar"
 import { dark } from "@clerk/themes"
 import { Toaster } from "@/components/Toaster"
+import { Analytics } from "@vercel/analytics/react"
 
 const APP_NAME = "My Transfer"
 const APP_DEFAULT_TITLE = "My Transfer"
@@ -59,6 +60,7 @@ export default function RootLayout({
           <Navbar />
           {children}
           <Toaster />
+          <Analytics />
         </body>
       </html>
     </ClerkProvider>
