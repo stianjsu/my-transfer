@@ -43,11 +43,11 @@ const About = () => {
               <p className="text-lg font-medium">Why I Created My-Transfer</p>
               <p className="mt-4 text-base text-slate-400">
                 My-Transfer was created to test out the developer experience
-                using Next.js, Vercel and Tailwind CSS. The functionality was
-                implemented easily with Firebase. I wanted to build a simple and
-                user-friendly app that allows you to transfer files securely
-                across devices without worrying about file storage or privacy
-                concerns.
+                using Next.js with App router, Vercel and Tailwind CSS. Core
+                functionality is powered by UploadThing and Vercel Postgres. I
+                wanted to build a simple and user-friendly app that allows you
+                to transfer files securely across devices without worrying about
+                file storage or privacy concerns.
               </p>
             </div>
           </div>
