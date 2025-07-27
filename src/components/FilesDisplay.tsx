@@ -1,4 +1,4 @@
-import { Download } from "./Icons"
+import { DownloadButton } from "@/components/DownloadButton"
 
 export const fileSizeConverter: (size: number) => string = (size) => {
   const sizeOrders = ["bytes", "KB", "MB", "GB"]
@@ -32,14 +32,7 @@ export const FileDisplay = ({
         <span>Type: {name.split(".")[1].toUpperCase()}</span>
       </div>
       <div className="size-12 min-w-max">
-        <a
-          href={downloadUrl}
-          className="flex size-12 items-center justify-center rounded-full border border-slate-300 transition ease-in-out hover:bg-slate-500"
-          download
-          target="_blank"
-        >
-          <Download size={30} />
-        </a>
+        <DownloadButton name={name} downloadUrl={downloadUrl} />
       </div>
     </div>
   )
