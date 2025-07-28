@@ -5,7 +5,7 @@ import { DropZone } from "@/components/Dropzone"
 import { auth } from "@clerk/nextjs/server"
 
 const Home = async () => {
-  const session = auth()
+  const session = await auth()
 
   if (!session || !session.userId) return session.redirectToSignIn()
 

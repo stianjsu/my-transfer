@@ -13,7 +13,7 @@ export function DropZone() {
       <UploadDropzone
         endpoint="fileUploader"
         appearance={{
-          container: "flex bg-slate-50 p-4",
+          container: "flex bg-slate-50 p-4 cursor-pointer",
           uploadIcon: "max-w-full",
           label: "max-w-full text-wrap text-slate-700",
           allowedContent: "hidden",

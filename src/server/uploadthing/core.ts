@@ -28,7 +28,7 @@ const FILE_UPLOAD_CONFIG = ALLOWED_FILE_TYPES.reduce(
 export const utFileRouter = {
   fileUploader: f(FILE_UPLOAD_CONFIG)
     .middleware(async ({ files }) => {
-      const user = auth()
+      const user = await auth()
       if (!user || !user.userId) throw new UploadThingError("Unauthorized")
 
       const totalSize = files.reduce((acc, next) => acc + next.size, 0)
