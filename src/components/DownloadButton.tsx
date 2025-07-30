@@ -1,6 +1,8 @@
 "use client"
-import { Download } from "./Icons"
+import { useState } from "react"
+import { Download, RefreshIcon } from "./Icons"
 import { saveAs } from "file-saver"
+import { toast } from "sonner"
 
 export const DownloadButton = ({
   name,
@@ -9,14 +11,20 @@ export const DownloadButton = ({
   name: string
   downloadUrl: string
 }) => {
+  const [downloading, setDownloading] = useState(false)
+
   const handleDownload = async () => {
     try {
+      setDownloading(true)
       const response = await fetch(downloadUrl)
       const blob = await response.blob()
       saveAs(blob, name)
     } catch (error) {
-      console.error("Download failed:", error)
+      console.error(error)
+      toast.error("Failed to open download window")
       window.open(downloadUrl, "_blank")
+    } finally {
+      setDownloading(false)
     }
   }
 
@@ -25,7 +33,7 @@ export const DownloadButton = ({
       onClick={handleDownload}
       className="flex size-12 items-center justify-center rounded-full border border-slate-300 transition ease-in-out hover:bg-slate-500"
     >
-      <Download size={30} />
+      {downloading ? <RefreshIcon size={30} /> : <Download size={30} />}
     </button>
   )
 }

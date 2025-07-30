@@ -14,9 +14,9 @@ const Home = async () => {
   })
 
   return (
-    <main className="m-auto flex min-h-screen flex-col gap-4 pt-24">
+    <main className="m-auto flex min-h-screen flex-col gap-4 pb-12 pt-24">
       <DropZone />
-      <div className="flex w-full flex-col gap-2">
+      <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
         {uplodedFiles.map((file) => {
           return (
             <FileDisplay

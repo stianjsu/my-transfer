@@ -8,6 +8,9 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  images: {
+    remotePatterns: [new URL("https://utfs.io/**")],
+  },
 }
 
 module.exports = nextPWA(nextConfig)

@@ -1,4 +1,13 @@
 import { DownloadButton } from "@/components/DownloadButton"
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardTitle,
+  CardFooter,
+  CardDescription,
+} from "@/components/ui/card"
+import Image from "next/image"
 
 export const fileSizeConverter: (size: number) => string = (size) => {
   const sizeOrders = ["bytes", "KB", "MB", "GB"]
@@ -18,22 +27,60 @@ export const FileDisplay = ({
   downloadUrl: string
   size: number
 }) => {
-  return (
-    <div className="flex h-24 w-full flex-row items-center gap-4 rounded-lg bg-slate-900 p-2 sm:h-20">
-      <div className="size-12 min-w-max">
-        <DownloadButton name={name} downloadUrl={downloadUrl} />
-      </div>
-      <span className="line-clamp-3 grow break-words text-sm sm:line-clamp-3 sm:text-base">
-        {name}
-      </span>
+  const imageExtensions = [
+    ".jpg",
+    ".jpeg",
+    ".png",
+    ".gif",
+    ".bmp",
+    ".webp",
+    ".svg",
+  ]
+  const extension = name.toLowerCase().substring(name.lastIndexOf("."))
+  const isImage = imageExtensions.includes(extension)
 
-      <div className="flex min-w-[100px] flex-col text-sm">
-        <span>
-          {timeCreated.toLocaleDateString("no", { dateStyle: "short" })}
-        </span>
-        <span>Size: {fileSizeConverter(size)}</span>
-        <span>Type: {name.split(".")[1].toUpperCase()}</span>
-      </div>
-    </div>
+  return (
+    <Card className="min-w-64 border">
+      <CardHeader>
+        <CardTitle className="text-xl">
+          <div className="flex flex-row">
+            <div className="relative h-[50px] w-[50px] overflow-hidden rounded-lg bg-gradient-to-br from-sky-400 to-cyan-400">
+              {isImage ? (
+                <Image
+                  fill
+                  src={downloadUrl}
+                  alt="🎨"
+                  className="object-cover"
+                  sizes="50px"
+                />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center">
+                  <span>📝</span>
+                </div>
+              )}
+            </div>
+            <div className="flex flex-1 justify-end">
+              <DownloadButton downloadUrl={downloadUrl} name={name} />
+            </div>
+          </div>
+          <div className="w-full overflow-hidden text-ellipsis text-nowrap pt-2">
+            {name}
+          </div>
+        </CardTitle>
+        <CardDescription>
+          {timeCreated.toLocaleTimeString("no") +
+            " - " +
+            timeCreated.toLocaleDateString("no", { dateStyle: "short" })}
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="flex flex-row gap-2">
+          <span className="flex-1 py-1">{fileSizeConverter(size)}</span>
+          <span className="text-s rounded bg-blue-600/30 px-2 py-1 font-medium uppercase tracking-wide text-blue-200">
+            {name.split(".")[1].toUpperCase()}
+          </span>
+        </div>
+      </CardContent>
+    </Card>
   )
 }
