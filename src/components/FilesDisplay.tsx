@@ -41,7 +41,7 @@ export const FileDisplay = ({
 
   return (
     <Card className="min-w-64 border">
-      <CardHeader>
+      <CardHeader className="pb-3">
         <CardTitle className="text-xl">
           <div className="flex flex-row">
             <div className="relative h-[50px] w-[50px] overflow-hidden rounded-lg bg-gradient-to-br from-sky-400 to-cyan-400">
