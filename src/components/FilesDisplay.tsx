@@ -6,7 +6,9 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card"
+import { FolderCheck } from "lucide-react"
 import Image from "next/image"
+import { FILE_URL } from "./uploadthing"
 
 export const fileSizeConverter: (size: number) => string = (size) => {
   const sizeOrders = ["bytes", "KB", "MB", "GB"]
@@ -18,13 +20,15 @@ export const fileSizeConverter: (size: number) => string = (size) => {
 export const FileDisplay = ({
   name,
   timeCreated,
-  downloadUrl,
+  fileKey,
   size,
+  lastDownloaded,
 }: {
   name: string
   timeCreated: Date
-  downloadUrl: string
+  fileKey: string
   size: number
+  lastDownloaded: Date | null
 }) => {
   const imageExtensions = [
     ".jpg",
@@ -40,6 +44,12 @@ export const FileDisplay = ({
 
   return (
     <Card className="border">
+      {lastDownloaded && (
+        <div className="absolute right-2 top-2">
+          <FolderCheck size={20} className="text-green-600" />
+        </div>
+      )}
+
       <CardHeader className="pb-3">
         <CardTitle className="text-xl">
           <div className="flex flex-row">
@@ -47,7 +57,7 @@ export const FileDisplay = ({
               {isImage ? (
                 <Image
                   fill
-                  src={downloadUrl}
+                  src={FILE_URL + fileKey}
                   alt="🎨"
                   className="object-cover"
                   sizes="50px"
@@ -59,7 +69,7 @@ export const FileDisplay = ({
               )}
             </div>
             <div className="flex flex-1 justify-end">
-              <DownloadButton downloadUrl={downloadUrl} name={name} />
+              <DownloadButton fileKey={fileKey} name={name} />
             </div>
           </div>
           <div className="w-full overflow-hidden text-ellipsis text-nowrap pt-2">
@@ -67,9 +77,11 @@ export const FileDisplay = ({
           </div>
         </CardTitle>
         <CardDescription>
-          {timeCreated.toLocaleTimeString("no") +
-            " - " +
-            timeCreated.toLocaleDateString("no", { dateStyle: "short" })}
+          <span>
+            {timeCreated.toLocaleTimeString("no") +
+              " - " +
+              timeCreated.toLocaleDateString("no", { dateStyle: "short" })}
+          </span>
         </CardDescription>
       </CardHeader>
       <CardContent>

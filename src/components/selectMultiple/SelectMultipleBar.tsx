@@ -5,6 +5,7 @@ import { useState } from "react"
 import saveAs from "file-saver"
 import { toast } from "sonner"
 import { FILE_URL } from "@/components/uploadthing"
+import { markFileAsDownloaded } from "@/server/actions/downloading"
 
 export function SelectMultipleBar({}: {}) {
   const { selectedFiles, clearSelection } = useSelection()
@@ -18,7 +19,7 @@ export function SelectMultipleBar({}: {}) {
     const promises: Promise<void>[] = []
 
     selectedFiles.forEach((file) => {
-      promises.push(handleDownload(FILE_URL + file.key, file.name))
+      promises.push(handleDownload(file.key, file.name))
     })
 
     await Promise.allSettled(promises)
@@ -26,11 +27,12 @@ export function SelectMultipleBar({}: {}) {
     setDownloading(false)
   }
 
-  const handleDownload = async (downloadUrl: string, name: string) => {
+  const handleDownload = async (fileKey: string, name: string) => {
     try {
-      const response = await fetch(downloadUrl)
+      const response = await fetch(FILE_URL + fileKey)
       const blob = await response.blob()
       saveAs(blob, name)
+      await markFileAsDownloaded(fileKey).catch((e) => console.error(e))
     } catch (error) {
       toast.error(`Failed to open download window for ${name}`)
     }

@@ -32,7 +32,6 @@ export const SelectMultipleProvider = ({
 
   const toggleSelection = (fileKey: string, name: string) => {
     setSelectedFiles((prev) => {
-      console.log(prev, name)
       let i = prev.findIndex((file) => file.key == fileKey)
       if (i == -1) return [...prev, { key: fileKey, name }]
 

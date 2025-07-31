@@ -14,6 +14,7 @@ const Home = async () => {
 
   const uplodedFiles = await db.query.uploadedFilesTable.findMany({
     where: (files, { eq }) => eq(files.userId, session.userId),
+    orderBy: (files, { desc }) => [desc(files.createdAt)],
   })
 
   return (
@@ -31,7 +32,8 @@ const Home = async () => {
                 <FileDisplay
                   key={file.key}
                   name={file.name}
-                  downloadUrl={FILE_URL + file.key}
+                  lastDownloaded={file.lastDownloaded}
+                  fileKey={file.key}
                   timeCreated={file.createdAt}
                   size={file.size}
                 />

@@ -3,15 +3,18 @@ import { useState } from "react"
 import { saveAs } from "file-saver"
 import { toast } from "sonner"
 import { LoaderCircle, FileDown } from "lucide-react"
+import { FILE_URL } from "@/components/uploadthing"
+import { markFileAsDownloaded } from "@/server/actions/downloading"
 
 export const DownloadButton = ({
   name,
-  downloadUrl,
+  fileKey,
 }: {
   name: string
-  downloadUrl: string
+  fileKey: string
 }) => {
   const [downloading, setDownloading] = useState(false)
+  const downloadUrl = FILE_URL + fileKey
 
   const handleDownload = async () => {
     try {
@@ -19,6 +22,7 @@ export const DownloadButton = ({
       const response = await fetch(downloadUrl)
       const blob = await response.blob()
       saveAs(blob, name)
+      await markFileAsDownloaded(fileKey).catch((e) => console.error(e))
     } catch (error) {
       console.error(error)
       toast.error("Failed to open download window")
