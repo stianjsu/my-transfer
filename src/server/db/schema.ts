@@ -28,6 +28,9 @@ export const uploadedFilesTable = createTable(
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
     size: integer("size").notNull(),
+    lastDownloaded: timestamp("last_downloaded", {
+      withTimezone: true,
+    }).default(sql`NULL`),
   },
   (example) => ({
     userIdIndex: index("userId_idx").on(example.userId),

@@ -1,0 +1,1 @@
+ALTER TABLE "mytransfer_uploaded_files" ADD COLUMN "last_downloaded" timestamp with time zone DEFAULT NULL;
