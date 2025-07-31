@@ -30,8 +30,12 @@ export const DownloadButton = ({
 
   return (
     <button
-      onClick={handleDownload}
+      onClick={(e) => {
+        e.stopPropagation()
+        handleDownload()
+      }}
       className="group flex h-12 w-12 items-center justify-center rounded-full border-2 border-gray-200 transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:border-blue-500 hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/30 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+      disabled={downloading}
     >
       {downloading ? (
         <LoaderCircle size={30} className="animate-spin" />

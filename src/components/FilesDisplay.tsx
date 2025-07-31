@@ -4,7 +4,6 @@ import {
   CardHeader,
   CardContent,
   CardTitle,
-  CardFooter,
   CardDescription,
 } from "@/components/ui/card"
 import Image from "next/image"
@@ -40,7 +39,7 @@ export const FileDisplay = ({
   const isImage = imageExtensions.includes(extension)
 
   return (
-    <Card className="min-w-64 border">
+    <Card className="border">
       <CardHeader className="pb-3">
         <CardTitle className="text-xl">
           <div className="flex flex-row">

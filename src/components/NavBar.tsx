@@ -3,7 +3,7 @@ import { SignedIn, UserButton } from "@clerk/nextjs"
 
 export default function Navbar() {
   return (
-    <nav className="fixed left-0 top-0 flex h-16 w-full items-center border-b-2 border-slate-400 bg-slate-800">
+    <nav className="fixed left-0 top-0 z-50 flex h-16 w-full items-center border-b-2 border-slate-400 bg-slate-800">
       <div className="mx-auto flex size-full h-full max-w-[50rem] flex-row items-center justify-center px-5 sm:justify-start">
         <div className="hidden grow items-center sm:flex">
           <Link
